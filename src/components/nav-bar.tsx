@@ -1,23 +1,23 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { createClient } from "@/utils/supabase/server";
-import { signInWithGitHub } from "@/app/sign-in/action";
-import { signOut } from "@/app/sign-out/action";
-import { GitHub } from "@/components/icons/github";
+} from '@/components/ui/dropdown-menu'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { createClient } from '@/utils/supabase/server'
+import { signInWithGitHub } from '@/app/sign-in/action'
+import { signOut } from '@/app/sign-out/action'
+import { GitHub } from '@/components/icons/github'
 
 export default async function NavBar() {
-  const supabase = createClient();
+  const supabase = createClient()
   const {
     data: { user },
-  } = await supabase.auth.getUser();
+  } = await supabase.auth.getUser()
 
   return (
     <nav className="border-b bg-background">
@@ -30,10 +30,7 @@ export default async function NavBar() {
               </span>
             </div>
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-              <Link
-                href="/"
-                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900"
-              >
+              <Link href="/" className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900">
                 Home
               </Link>
               <Link
@@ -54,15 +51,9 @@ export default async function NavBar() {
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    className="relative size-8 rounded-full"
-                  >
+                  <Button variant="ghost" className="relative size-8 rounded-full">
                     <Avatar className="size-8">
-                      <AvatarImage
-                        src={user.user_metadata.avatar_url}
-                        alt={user.email}
-                      />
+                      <AvatarImage src={user.user_metadata.avatar_url} alt={user.email} />
                       <AvatarFallback>U</AvatarFallback>
                     </Avatar>
                   </Button>
@@ -90,5 +81,5 @@ export default async function NavBar() {
         </div>
       </div>
     </nav>
-  );
+  )
 }

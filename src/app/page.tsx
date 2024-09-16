@@ -1,30 +1,30 @@
-import { GitHub } from "@/components/icons/github";
-import { createClient } from "@/utils/supabase/server";
-import { signInWithGitHub } from "@/app/sign-in/action";
-import { Input } from "@/components/ui/input";
-import { redirect } from "next/navigation";
-import { SubmitButton } from "@/components/submit";
-import { WandSparkles } from "lucide-react";
+import { GitHub } from '@/components/icons/github'
+import { createClient } from '@/utils/supabase/server'
+import { signInWithGitHub } from '@/app/sign-in/action'
+import { Input } from '@/components/ui/input'
+import { redirect } from 'next/navigation'
+import { SubmitButton } from '@/components/submit'
+import { WandSparkles } from 'lucide-react'
 
 const createChat = async (formData: FormData) => {
-  "use server";
-  const supabase = createClient();
-  const prompt = formData.get("prompt");
+  'use server'
+  const supabase = createClient()
+  const prompt = formData.get('prompt')
   const {
     data: { user },
-  } = await supabase.auth.getUser();
+  } = await supabase.auth.getUser()
 
   const { data: chatData, error: chatError } = await supabase
-    .from("chats")
+    .from('chats')
     .insert([{ owned_by: user?.id, title: prompt }])
-    .select();
+    .select()
 
   if (chatError) {
-    console.error(chatError);
+    console.error(chatError)
   }
 
   const { error: messageError } = await supabase
-    .from("messages")
+    .from('messages')
     .insert([
       {
         chat_id: chatData?.[0]?.id,
@@ -32,34 +32,29 @@ const createChat = async (formData: FormData) => {
         prompt,
       },
     ])
-    .select();
+    .select()
 
   if (messageError) {
-    console.error(messageError);
+    console.error(messageError)
   }
 
-  redirect(`/chat/${chatData?.[0].id}`);
-};
+  redirect(`/chat/${chatData?.[0].id}`)
+}
 
 export default async function Page() {
-  const supabase = createClient();
+  const supabase = createClient()
   const {
     data: { user },
-  } = await supabase.auth.getUser();
-  const signedIn = Boolean(user);
+  } = await supabase.auth.getUser()
+  const signedIn = Boolean(user)
   return (
     <>
       <div className="m-16 mx-auto gap-2 text-center">
-        <h1 className="text-3xl font-bold tracking-tighter">
-          What email do you want to create?
-        </h1>
+        <h1 className="text-3xl font-bold tracking-tighter">What email do you want to create?</h1>
         <p className="mx-auto max-w-[700px] text-white md:text-xl"></p>
       </div>
       {signedIn ? (
-        <form
-          action={createChat}
-          className="mx-auto flex max-w-sm flex-col gap-2"
-        >
+        <form action={createChat} className="mx-auto flex max-w-sm flex-col gap-2">
           <Input placeholder="A user sign-up welcome email..." name="prompt" />
           <SubmitButton>
             <WandSparkles className="size-4" />
@@ -67,10 +62,7 @@ export default async function Page() {
           </SubmitButton>
         </form>
       ) : (
-        <form
-          action={signInWithGitHub}
-          className="mx-auto flex max-w-sm flex-col gap-2"
-        >
+        <form action={signInWithGitHub} className="mx-auto flex max-w-sm flex-col gap-2">
           <Input placeholder="A user sign-up welcome email..." />
           <SubmitButton>
             <GitHub className="size-4" />
@@ -79,5 +71,5 @@ export default async function Page() {
         </form>
       )}
     </>
-  );
+  )
 }
