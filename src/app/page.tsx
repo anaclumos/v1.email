@@ -19,10 +19,6 @@ const createChat = async (formData: FormData) => {
     .insert([{ owned_by: user?.id, title: prompt }])
     .select()
 
-  if (chatError) {
-    console.error(chatError)
-  }
-
   const { error: messageError } = await supabase
     .from('messages')
     .insert([
@@ -34,11 +30,9 @@ const createChat = async (formData: FormData) => {
     ])
     .select()
 
-  if (messageError) {
-    console.error(messageError)
+  if (!chatError && !messageError) {
+    redirect(`/chat/${chatData?.[0].id}`)
   }
-
-  redirect(`/chat/${chatData?.[0].id}`)
 }
 
 export default async function Page() {
@@ -50,7 +44,9 @@ export default async function Page() {
   return (
     <>
       <div className="m-16 mx-auto gap-2 text-center">
-        <h1 className="text-3xl font-bold tracking-tighter">What email do you want to create?</h1>
+        <h1 className="text-balance text-3xl font-bold tracking-tight">
+          What kind of email template do you want to create?
+        </h1>
         <p className="mx-auto max-w-[700px] text-white md:text-xl"></p>
       </div>
       {signedIn ? (
