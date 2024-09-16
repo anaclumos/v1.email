@@ -15,6 +15,7 @@ import { GitHub } from '@/components/icons/github'
 import { UserIcon } from 'lucide-react'
 import { Suspense } from 'react'
 import { User } from '@supabase/supabase-js'
+import { SubmitButton } from './submit'
 
 export function Nav({ user }: { user?: User | null }) {
   return (
@@ -59,22 +60,26 @@ export function Nav({ user }: { user?: User | null }) {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                  <DropdownMenuItem>Profile</DropdownMenuItem>
-                  <DropdownMenuItem>Settings</DropdownMenuItem>
+                  <Link href="/profile">
+                    <DropdownMenuItem className="cursor-pointer">Profile</DropdownMenuItem>
+                  </Link>
+                  <Link href="/settings">
+                    <DropdownMenuItem className="cursor-pointer">Settings</DropdownMenuItem>
+                  </Link>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>
-                    <form action={signOut}>
-                      <Button>Sign Out</Button>
-                    </form>
-                  </DropdownMenuItem>
+                  <form action={signOut}>
+                    <SubmitButton className="w-full" variant="outline">
+                      Sign Out
+                    </SubmitButton>
+                  </form>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
               <form action={signInWithGitHub}>
-                <Button className="gap-2">
+                <SubmitButton>
                   <GitHub className="size-4" />
                   Sign In
-                </Button>
+                </SubmitButton>
               </form>
             )}
           </div>
