@@ -17,7 +17,7 @@ const SubmitButton = (props: {
       disabled={pending}
       type="submit"
     >
-      {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : props.children}
+      {pending ? <Loader2 className="size-4 animate-spin" /> : props.children}
     </Button>
   );
 };

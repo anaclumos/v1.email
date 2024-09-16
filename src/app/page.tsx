@@ -49,7 +49,7 @@ export default async function Page() {
   const signedIn = Boolean(user);
   return (
     <>
-      <div className="text-center gap-2 m-16 mx-auto">
+      <div className="m-16 mx-auto gap-2 text-center">
         <h1 className="text-3xl font-bold tracking-tighter">
           What email do you want to create?
         </h1>
@@ -58,7 +58,7 @@ export default async function Page() {
       {signedIn ? (
         <form
           action={createChat}
-          className="flex flex-col max-w-sm mx-auto gap-2"
+          className="mx-auto flex max-w-sm flex-col gap-2"
         >
           <Input placeholder="A user sign-up welcome email..." name="prompt" />
           <SubmitButton>
@@ -69,7 +69,7 @@ export default async function Page() {
       ) : (
         <form
           action={signInWithGitHub}
-          className="flex flex-col max-w-sm mx-auto gap-2"
+          className="mx-auto flex max-w-sm flex-col gap-2"
         >
           <Input placeholder="A user sign-up welcome email..." />
           <SubmitButton>
