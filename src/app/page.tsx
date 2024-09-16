@@ -59,7 +59,7 @@ export default async function Page() {
         </form>
       ) : (
         <form action={signInWithGitHub} className="mx-auto flex max-w-sm flex-col gap-2">
-          <Input placeholder="A user sign-up welcome email..." />
+          <Input placeholder="A user sign-up welcome email..." disabled />
           <SubmitButton>
             <GitHub className="size-4" />
             Sign in with GitHub
