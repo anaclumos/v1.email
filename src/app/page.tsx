@@ -19,8 +19,6 @@ export default async function NavBar() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  console.log(user);
-
   return (
     <nav className="bg-background border-b">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
