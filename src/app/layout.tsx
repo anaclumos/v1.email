@@ -20,10 +20,10 @@ export default function RootLayout({
       <body>
         <NavBar />
         {children}
+        <Analytics />
+        <SpeedInsights />
+        <Toaster />
       </body>
-      <Analytics />
-      <SpeedInsights />
-      <Toaster />
     </html>
   )
 }
