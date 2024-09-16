@@ -29,7 +29,7 @@ const createChat = async (formData: FormData) => {
       {
         chat_id: chatData?.[0]?.id,
         sent_by: user?.id,
-        message: prompt,
+        prompt,
       },
     ])
     .select();
