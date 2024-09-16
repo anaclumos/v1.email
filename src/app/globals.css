@@ -17,7 +17,18 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family:
+    'SF Pro',
+    ui-sans-serif,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Apple SD Gothic Neo',
+    'Pretendard',
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    system-ui,
+    -system-ui,
+    sans-serif;
 }
 
 @layer utilities {
