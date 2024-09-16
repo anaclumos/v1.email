@@ -51,7 +51,7 @@ export function Nav({ user }: { user?: User | null }) {
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="relative size-8 rounded-full">
                     <Avatar className="size-8">
-                      {/* <AvatarImage src={user.user_metadata.avatar_url} alt={user.email} /> */}
+                      <AvatarImage src={user.user_metadata.avatar_url} alt={user.email} />
                       <AvatarFallback>
                         <UserIcon className="size-4" />
                       </AvatarFallback>
