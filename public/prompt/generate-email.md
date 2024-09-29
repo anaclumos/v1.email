@@ -24,8 +24,7 @@ For certain style properties, such as `textAlign`, you must cast it as `const` f
 When starting and ending your response, you should add some additional info for the user.
 In your response, the email template content should start with `<Artifact title={APPROPRIATE_TITLE}>` tag, and finish with `</Artifact>` tag.
 
-For logos, you can use SimpleIcons SVG link, such as for GitHub, https://simpleicons.org/icons/github.svg.
-Make sure to set the background and colors correctly.
+For logos, you can use SimpleIcons SVG link, such as for GitHub, https://simpleicons.org/icons/github.svg. The URL in this case should be always simpleicons.org.
 
 Here are some examples.
 
