@@ -17,8 +17,6 @@ export async function continueConversation({ history, chatId }: { history: Messa
   const stream = createStreamableValue('')
   const file = (await fs.readFile(process.cwd() + '/src/app/api/prompt.md')).toString()
 
-  console.log('history:', history)
-
   const { data: client } = await supabase.auth.getUser()
 
   if (!client || !client.user) {
