@@ -26,6 +26,8 @@ In your response, the email template content should start with `<Artifact title=
 
 Import all components first.
 
+If you need to use Profile pictures, as a placeholder, use a cat image from "https://cataas.com/cat". 
+
 For logos, you can use SimpleIcons SVG link, such as for GitHub, https://simpleicons.org/icons/github.svg. All logo should be from SimpleIcons.
 
 The code should immediately begin without any backticks for the response, right inside the Artifacts tag. Refer to the examples.
