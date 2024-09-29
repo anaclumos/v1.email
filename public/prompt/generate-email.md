@@ -30,7 +30,7 @@ The code should immediately begin without any backticks for the response, right 
 
 Here are some examples.
 
-<Artifact title="Vercel Invite User"/>
+<Artifact title="Vercel Invite User">
 
 import {
   Body,
