@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { UserIcon, BotIcon, SendIcon, CodeIcon } from 'lucide-react'
+import { UserIcon, BotIcon, SendIcon, CodeIcon, CopyIcon, CheckIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import dynamic from 'next/dynamic'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
@@ -28,6 +28,7 @@ const V1EmailClient: React.FC<Props> = ({ initialConversation, chatId }) => {
   const [input, setInput] = useState<string>('')
   const [selectedArtifact, setSelectedArtifact] = useState<Artifact | null>(null)
   const [activeTab, setActiveTab] = useState<string>('preview')
+  const [isCopied, setIsCopied] = useState(false)
   const handledInitialMessageRef = useRef(false)
   const handleSendRef = useRef(false)
 
@@ -109,6 +110,15 @@ const V1EmailClient: React.FC<Props> = ({ initialConversation, chatId }) => {
     setActiveTab('code')
   }
 
+  const handleCopyCode = () => {
+    if (selectedArtifact) {
+      navigator.clipboard.writeText(selectedArtifact.content).then(() => {
+        setIsCopied(true)
+        setTimeout(() => setIsCopied(false), 2000)
+      })
+    }
+  }
+
   return (
     <div className="flex h-[calc(100vh-4.25rem)] flex-col overflow-hidden md:flex-row">
       <div className="flex size-full flex-col p-4 md:w-1/2">
@@ -166,18 +176,29 @@ const V1EmailClient: React.FC<Props> = ({ initialConversation, chatId }) => {
           </TabsContent>
           <TabsContent value="code" className="grow overflow-scroll">
             <ScrollArea className="h-full rounded">
-              <SyntaxHighlighter
-                language={selectedArtifact?.language || 'typescript'}
-                style={vscDarkPlus}
-                customStyle={{
-                  padding: '1rem',
-                  borderRadius: '0.25rem',
-                  fontSize: '1rem',
-                  margin: 0,
-                }}
+              <Button
+                onClick={handleCopyCode}
+                className="absolute right-2 top-2 z-10 gap-2"
+                variant="outline"
+                size="sm"
               >
-                {selectedArtifact ? selectedArtifact.content : 'No code to display'}
-              </SyntaxHighlighter>
+                {isCopied ? <CheckIcon size={16} /> : <CopyIcon size={16} />}
+                {isCopied ? 'Copied!' : 'Copy'}
+              </Button>
+              <div className="relative">
+                <SyntaxHighlighter
+                  language={selectedArtifact?.language || 'typescript'}
+                  style={vscDarkPlus}
+                  customStyle={{
+                    padding: '1rem',
+                    borderRadius: '0.25rem',
+                    fontSize: '1rem',
+                    margin: 0,
+                  }}
+                >
+                  {selectedArtifact ? selectedArtifact.content : 'No code to display'}
+                </SyntaxHighlighter>
+              </div>
             </ScrollArea>
           </TabsContent>
         </Tabs>
