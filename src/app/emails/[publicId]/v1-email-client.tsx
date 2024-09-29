@@ -110,9 +110,9 @@ const V1EmailClient: React.FC<Props> = ({ initialConversation, chatId }) => {
   }
 
   return (
-    <div className="flex flex-col md:flex-row">
-      <div className="w-full flex-1 flex-col p-4 md:w-1/2">
-        <ScrollArea className="flex-1 pr-4">
+    <div className="flex h-[calc(100vh-4.25rem)] flex-col overflow-hidden md:flex-row">
+      <div className="flex size-full flex-col p-4 md:w-1/2">
+        <ScrollArea className="grow">
           {conversation.map((message, index) => (
             <div key={index} className={cn('flex items-start mb-4')}>
               <div
@@ -160,15 +160,14 @@ const V1EmailClient: React.FC<Props> = ({ initialConversation, chatId }) => {
           </Button>
         </div>
       </div>
-      <div className="w-full p-4 md:w-1/2">
-        <Tabs value={activeTab} onValueChange={setActiveTab}>
+      <div className="flex size-full flex-col p-4 md:w-1/2">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="flex h-full flex-col">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="preview">Preview</TabsTrigger>
             <TabsTrigger value="code">Code</TabsTrigger>
           </TabsList>
-          <TabsContent value="preview">
-            <h2 className="mb-2 text-lg font-semibold">Artifacts Preview</h2>
-            <div className="max-h-[calc(100vh-200px)] overflow-auto">
+          <TabsContent value="preview" className="grow overflow-hidden">
+            <ScrollArea className="h-full">
               <SyntaxHighlighter
                 language={selectedArtifact?.language || 'typescript'}
                 style={vscDarkPlus}
@@ -176,11 +175,10 @@ const V1EmailClient: React.FC<Props> = ({ initialConversation, chatId }) => {
               >
                 {selectedArtifact ? selectedArtifact.content : 'No code to display'}
               </SyntaxHighlighter>
-            </div>
+            </ScrollArea>
           </TabsContent>
-          <TabsContent value="code">
-            <h2 className="mb-2 text-lg font-semibold">{selectedArtifact ? selectedArtifact.title : 'Full Code'}</h2>
-            <div className="max-h-[calc(100vh-200px)] overflow-auto">
+          <TabsContent value="code" className="grow overflow-hidden">
+            <ScrollArea className="h-full">
               <SyntaxHighlighter
                 language={selectedArtifact?.language || 'typescript'}
                 style={vscDarkPlus}
@@ -188,7 +186,7 @@ const V1EmailClient: React.FC<Props> = ({ initialConversation, chatId }) => {
               >
                 {selectedArtifact ? selectedArtifact.content : 'No code to display'}
               </SyntaxHighlighter>
-            </div>
+            </ScrollArea>
           </TabsContent>
         </Tabs>
       </div>
