@@ -3,7 +3,6 @@
 import { streamText } from 'ai'
 import { openai } from '@ai-sdk/openai'
 import { createStreamableValue } from 'ai/rsc'
-import { promises as fs } from 'fs'
 import { createClient } from '@/utils/supabase/server'
 
 export interface Message {
@@ -15,7 +14,7 @@ export async function continueConversation({ history, chatId }: { history: Messa
   'use server'
   const supabase = createClient()
   const stream = createStreamableValue('')
-  const file = (await fs.readFile(process.cwd() + '/src/app/api/prompt.md')).toString()
+  const file = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/prompt/generate-email.md`).then((res) => res.text())
 
   const { data: client } = await supabase.auth.getUser()
 
