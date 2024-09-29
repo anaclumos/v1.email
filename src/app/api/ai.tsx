@@ -50,7 +50,7 @@ export async function continueConversation({ history, chatId }: { history: Messa
 
   ;(async () => {
     const { textStream } = await streamText({
-      model: openai('gpt-4o-mini'),
+      model: openai('gpt-4o'),
       system: file,
       messages: history,
     })
