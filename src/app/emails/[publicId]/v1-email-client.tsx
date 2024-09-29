@@ -10,15 +10,17 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { UserIcon, BotIcon, SendIcon, CodeIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import dynamic from 'next/dynamic'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 
 export type Props = {
   initialConversation: Message[]
   chatId: string
 }
-
 interface Artifact {
   title: string
   content: string
+  language?: string
 }
 
 const V1EmailClient: React.FC<Props> = ({ initialConversation, chatId }) => {
@@ -30,11 +32,12 @@ const V1EmailClient: React.FC<Props> = ({ initialConversation, chatId }) => {
   const handleSendRef = useRef(false)
 
   const extractArtifacts = (content: string): Artifact[] => {
-    const artifactRegex = /<Artifact title="(.*?)"\s*>([\s\S]*?)<\/Artifact>/g
+    const artifactRegex = /<Artifact title="(.*?)"(?:\s+language="(.*?)")?\s*>([\s\S]*?)<\/Artifact>/g
     const matches = [...content.matchAll(artifactRegex)]
     return matches.map((match) => ({
       title: match[1],
-      content: match[2].trim(),
+      language: match[2] || 'typescript',
+      content: match[3].trim(),
     }))
   }
 
@@ -108,7 +111,7 @@ const V1EmailClient: React.FC<Props> = ({ initialConversation, chatId }) => {
 
   return (
     <div className="flex flex-col md:flex-row">
-      <div className="flex w-1/2 flex-1 flex-col p-4">
+      <div className="w-full flex-1 flex-col p-4 md:w-1/2">
         <ScrollArea className="flex-1 pr-4">
           {conversation.map((message, index) => (
             <div key={index} className={cn('flex items-start mb-4')}>
@@ -157,7 +160,7 @@ const V1EmailClient: React.FC<Props> = ({ initialConversation, chatId }) => {
           </Button>
         </div>
       </div>
-      <div className="flex-1 p-4">
+      <div className="w-full p-4 md:w-1/2">
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="preview">Preview</TabsTrigger>
@@ -165,15 +168,27 @@ const V1EmailClient: React.FC<Props> = ({ initialConversation, chatId }) => {
           </TabsList>
           <TabsContent value="preview">
             <h2 className="mb-2 text-lg font-semibold">Artifacts Preview</h2>
-            <pre className="rounded bg-secondary p-4 text-secondary-foreground">
-              <code>{selectedArtifact ? selectedArtifact.content : 'No code to display'}</code>
-            </pre>
+            <div className="max-h-[calc(100vh-200px)] overflow-auto">
+              <SyntaxHighlighter
+                language={selectedArtifact?.language || 'typescript'}
+                style={vscDarkPlus}
+                customStyle={{ margin: 0 }}
+              >
+                {selectedArtifact ? selectedArtifact.content : 'No code to display'}
+              </SyntaxHighlighter>
+            </div>
           </TabsContent>
           <TabsContent value="code">
             <h2 className="mb-2 text-lg font-semibold">{selectedArtifact ? selectedArtifact.title : 'Full Code'}</h2>
-            <pre className="rounded bg-secondary p-4 text-secondary-foreground">
-              <code>{selectedArtifact ? selectedArtifact.content : 'No code to display'}</code>
-            </pre>
+            <div className="max-h-[calc(100vh-200px)] overflow-auto">
+              <SyntaxHighlighter
+                language={selectedArtifact?.language || 'typescript'}
+                style={vscDarkPlus}
+                customStyle={{ margin: 0 }}
+              >
+                {selectedArtifact ? selectedArtifact.content : 'No code to display'}
+              </SyntaxHighlighter>
+            </div>
           </TabsContent>
         </Tabs>
       </div>
