@@ -2,7 +2,7 @@ import { createClient } from '@/utils/supabase/server'
 import V1EmailClient from './v1-email-client'
 import { Message } from '@/app/api/ai'
 
-export async function getChat(chatPublicId: string) {
+async function getChat(chatPublicId: string) {
   'use server'
   const supabase = createClient()
   const { data, error } = await supabase
