@@ -24,7 +24,7 @@ For certain style properties, such as `textAlign`, you must cast it as `const` f
 When starting and ending your response, you should add some additional info for the user.
 In your response, the email template content should start with `<Artifact title={APPROPRIATE_TITLE}>` tag, and finish with `</Artifact>` tag.
 
-For logos, you can use SimpleIcons SVG link, such as for GitHub, https://simpleicons.org/icons/github.svg. The URL in this case should be always simpleicons.org.
+For logos, you can use SimpleIcons SVG link, such as for GitHub, https://simpleicons.org/icons/github.svg. All logo should be from SimpleIcons.
 
 Here are some examples.
 
@@ -61,8 +61,6 @@ interface VercelInviteUserEmailProps {
   inviteFromLocation?: string
 }
 
-const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : ''
-
 export const VercelInviteUserEmail = ({
   username,
   userImage,
@@ -85,7 +83,7 @@ export const VercelInviteUserEmail = ({
           <Container className="border border-solid border-[#eaeaea] rounded my-[40px] mx-auto p-[20px] max-w-[465px]">
             <Section className="mt-[32px]">
               <Img
-                src={`${baseUrl}/static/vercel-logo.png`}
+                src="https://simpleicons.org/icons/vercel.svg"
                 width="40"
                 height="37"
                 alt="Vercel"
@@ -161,153 +159,10 @@ export default VercelInviteUserEmail
 
 </Artifact>
 
-<Artifact title="Plaid Verify Identity">
-
-import { Body, Container, Head, Heading, Html, Img, Link, Section, Text } from '@react-email/components'
-import * as React from 'react'
-
-interface PlaidVerifyIdentityEmailProps {
-  validationCode?: string
-}
-
-const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : ''
-
-export const PlaidVerifyIdentityEmail = ({ validationCode }: PlaidVerifyIdentityEmailProps) => (
-  <Html>
-    <Head />
-    <Body style={main}>
-      <Container style={container}>
-        <Img src={`${baseUrl}/static/plaid-logo.png`} width="212" height="88" alt="Plaid" style={logo} />
-        <Text style={tertiary}>Verify Your Identity</Text>
-        <Heading style={secondary}>Enter the following code to finish linking Venmo.</Heading>
-        <Section style={codeContainer}>
-          <Text style={code}>{validationCode}</Text>
-        </Section>
-        <Text style={paragraph}>Not expecting this email?</Text>
-        <Text style={paragraph}>
-          Contact{' '}
-          <Link href="mailto:login@plaid.com" style={link}>
-            login@plaid.com
-          </Link>{' '}
-          if you did not request this code.
-        </Text>
-      </Container>
-      <Text style={footer}>Securely powered by Plaid.</Text>
-    </Body>
-  </Html>
-)
-
-PlaidVerifyIdentityEmail.PreviewProps = {
-  validationCode: '144833',
-} as PlaidVerifyIdentityEmailProps
-
-export default PlaidVerifyIdentityEmail
-
-const main = {
-  backgroundColor: '#ffffff',
-  fontFamily: 'HelveticaNeue,Helvetica,Arial,sans-serif',
-}
-
-const container = {
-  backgroundColor: '#ffffff',
-  border: '1px solid #eee',
-  borderRadius: '5px',
-  boxShadow: '0 5px 10px rgba(20,50,70,.2)',
-  marginTop: '20px',
-  maxWidth: '360px',
-  margin: '0 auto',
-  padding: '68px 0 130px',
-}
-
-const logo = {
-  margin: '0 auto',
-}
-
-const tertiary = {
-  color: '#0a85ea',
-  fontSize: '11px',
-  fontWeight: 700,
-  fontFamily: 'HelveticaNeue,Helvetica,Arial,sans-serif',
-  height: '16px',
-  letterSpacing: '0',
-  lineHeight: '16px',
-  margin: '16px 8px 8px 8px',
-  textTransform: 'uppercase' as const,
-  textAlign: 'center' as const,
-}
-
-const secondary = {
-  color: '#000',
-  display: 'inline-block',
-  fontFamily: 'HelveticaNeue-Medium,Helvetica,Arial,sans-serif',
-  fontSize: '20px',
-  fontWeight: 500,
-  lineHeight: '24px',
-  marginBottom: '0',
-  marginTop: '0',
-  textAlign: 'center' as const,
-}
-
-const codeContainer = {
-  background: 'rgba(0,0,0,.05)',
-  borderRadius: '4px',
-  margin: '16px auto 14px',
-  verticalAlign: 'middle',
-  width: '280px',
-}
-
-const code = {
-  color: '#000',
-  display: 'inline-block',
-  fontFamily: 'HelveticaNeue-Bold',
-  fontSize: '32px',
-  fontWeight: 700,
-  letterSpacing: '6px',
-  lineHeight: '40px',
-  paddingBottom: '8px',
-  paddingTop: '8px',
-  margin: '0 auto',
-  width: '100%',
-  textAlign: 'center' as const,
-}
-
-const paragraph = {
-  color: '#444',
-  fontSize: '15px',
-  fontFamily: 'HelveticaNeue,Helvetica,Arial,sans-serif',
-  letterSpacing: '0',
-  lineHeight: '23px',
-  padding: '0 40px',
-  margin: '0',
-  textAlign: 'center' as const,
-}
-
-const link = {
-  color: '#444',
-  textDecoration: 'underline',
-}
-
-const footer = {
-  color: '#000',
-  fontSize: '12px',
-  fontWeight: 800,
-  letterSpacing: '0',
-  lineHeight: '23px',
-  margin: '0',
-  marginTop: '20px',
-  fontFamily: 'HelveticaNeue,Helvetica,Arial,sans-serif',
-  textAlign: 'center' as const,
-  textTransform: 'uppercase' as const,
-}
-
-</Artifact>
-
 <Artifact title="Stripe Welcome">
 
 import { Body, Button, Container, Head, Hr, Html, Img, Link, Preview, Section, Text } from '@react-email/components'
 import * as React from 'react'
-
-const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : ''
 
 export const StripeWelcomeEmail = () => (
   <Html>
@@ -316,7 +171,7 @@ export const StripeWelcomeEmail = () => (
     <Body style={main}>
       <Container style={container}>
         <Section style={box}>
-          <Img src={`${baseUrl}/static/stripe-logo.png`} width="49" height="21" alt="Stripe" />
+          <Img src="https://simpleicons.org/icons/stripe.svg" width="49" height="21" alt="Stripe" />
           <Hr style={hr} />
           <Text style={paragraph}>
             Thanks for submitting your account information. You&apos;re now ready to make live transactions with Stripe!
@@ -436,8 +291,6 @@ interface NotionMagicLinkEmailProps {
   loginCode?: string
 }
 
-const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : ''
-
 export const NotionMagicLinkEmail = ({ loginCode }: NotionMagicLinkEmailProps) => (
   <Html>
     <Head />
@@ -478,7 +331,7 @@ export const NotionMagicLinkEmail = ({ loginCode }: NotionMagicLinkEmailProps) =
         >
           Hint: You can set a permanent password in Settings & members → My account.
         </Text>
-        <Img src={`${baseUrl}/static/notion-logo.png`} width="32" height="32" alt="Notion's Logo" />
+        <Img src="https://simpleicons.org/icons/notion.svg" width="32" height="32" alt="Notion's Logo" />
         <Text style={footer}>
           <Link href="https://notion.so" target="_blank" style={{ ...link, color: '#898989' }}>
             Notion.so
