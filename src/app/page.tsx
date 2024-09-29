@@ -39,7 +39,7 @@ const createChat = async (formData: FormData) => {
     throw new Error('Failed to create message')
   }
 
-  redirect(`/chat/${chat.public_id}`)
+  redirect(`/emails/${chat.public_id}`)
 }
 
 export default async function Page() {
