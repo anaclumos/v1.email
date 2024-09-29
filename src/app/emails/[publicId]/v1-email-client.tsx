@@ -7,11 +7,18 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { UserIcon, BotIcon, SendIcon, CodeIcon, CopyIcon, CheckIcon } from 'lucide-react'
+import { SendIcon, CodeIcon, CopyIcon, CheckIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import dynamic from 'next/dynamic'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism'
+
+import { JetBrains_Mono as FontMono } from 'next/font/google'
+
+const fontMono = FontMono({
+  weight: '400',
+  subsets: ['latin'],
+})
 
 export type Props = {
   initialConversation: Message[]
@@ -125,30 +132,22 @@ const V1EmailClient: React.FC<Props> = ({ initialConversation, chatId }) => {
         <ScrollArea className="grow">
           {conversation.map((message, index) => (
             <div key={index} className={cn('flex items-start mb-4')}>
-              <div
-                className={cn(
-                  `flex size-8 items-center justify-center rounded-full`,
-                  message.role === 'user'
-                    ? 'bg-secondary text-secondary-foreground'
-                    : 'bg-primary text-primary-foreground'
-                )}
-              >
-                {message.role === 'user' ? <UserIcon size={16} /> : <BotIcon size={16} />}
-              </div>
-              <div className={cn('mx-2 p-2 rounded-lg bg-secondary text-secondary-foreground')}>
-                {message.role === 'assistant' && extractArtifacts(message.content).length > 0 ? (
-                  <div>
-                    {extractArtifacts(message.content).map((artifact, i) => (
-                      <Button key={i} onClick={() => handleShowArtifact(artifact)} variant="outline">
-                        <CodeIcon size={16} className="mr-2" />
-                        {artifact.title}
-                      </Button>
-                    ))}
-                  </div>
-                ) : (
+              {message.role === 'user' ? (
+                <div className={cn('p-2 rounded-lg bg-secondary text-secondary-foreground')}>
                   <div>{message.content}</div>
-                )}
-              </div>
+                </div>
+              ) : message.role === 'assistant' && extractArtifacts(message.content).length > 0 ? (
+                <div>
+                  {extractArtifacts(message.content).map((artifact, i) => (
+                    <Button key={i} onClick={() => handleShowArtifact(artifact)} variant="outline">
+                      <CodeIcon size={16} className="mr-2" />
+                      {artifact.title}
+                    </Button>
+                  ))}
+                </div>
+              ) : (
+                <div className={fontMono.className}>{message.content}</div>
+              )}
             </div>
           ))}
         </ScrollArea>
