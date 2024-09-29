@@ -129,12 +129,7 @@ const V1EmailClient: React.FC<Props> = ({ initialConversation, chatId }) => {
                 {message.role === 'assistant' && extractArtifacts(message.content).length > 0 ? (
                   <div>
                     {extractArtifacts(message.content).map((artifact, i) => (
-                      <Button
-                        key={i}
-                        onClick={() => handleShowArtifact(artifact)}
-                        variant="outline"
-                        className="mr-2 mt-2"
-                      >
+                      <Button key={i} onClick={() => handleShowArtifact(artifact)} variant="outline">
                         <CodeIcon size={16} className="mr-2" />
                         {artifact.title}
                       </Button>
@@ -166,23 +161,20 @@ const V1EmailClient: React.FC<Props> = ({ initialConversation, chatId }) => {
             <TabsTrigger value="preview">Preview</TabsTrigger>
             <TabsTrigger value="code">Code</TabsTrigger>
           </TabsList>
-          <TabsContent value="preview" className="grow overflow-hidden">
-            <ScrollArea className="h-full">
-              <SyntaxHighlighter
-                language={selectedArtifact?.language || 'typescript'}
-                style={vscDarkPlus}
-                customStyle={{ margin: 0 }}
-              >
-                {selectedArtifact ? selectedArtifact.content : 'No code to display'}
-              </SyntaxHighlighter>
-            </ScrollArea>
+          <TabsContent value="preview" className="grow overflow-scroll">
+            <ScrollArea className="h-full">Work in progress...</ScrollArea>
           </TabsContent>
-          <TabsContent value="code" className="grow overflow-hidden">
-            <ScrollArea className="h-full">
+          <TabsContent value="code" className="grow overflow-scroll">
+            <ScrollArea className="h-full rounded">
               <SyntaxHighlighter
                 language={selectedArtifact?.language || 'typescript'}
                 style={vscDarkPlus}
-                customStyle={{ margin: 0 }}
+                customStyle={{
+                  padding: '1rem',
+                  borderRadius: '0.25rem',
+                  fontSize: '1rem',
+                  margin: 0,
+                }}
               >
                 {selectedArtifact ? selectedArtifact.content : 'No code to display'}
               </SyntaxHighlighter>

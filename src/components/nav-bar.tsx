@@ -25,7 +25,9 @@ export function Nav({ user }: { user?: User | null }) {
           <div className="flex">
             <div className="flex shrink-0 items-center">
               <span className="text-2xl font-bold text-primary">
-                <Link href="/">v1.email</Link>
+                <Link href="/">
+                  v1.email <span className="text-xs">alpha</span>
+                </Link>
               </span>
             </div>
           </div>
