@@ -14,14 +14,17 @@ export interface Message {
 export async function continueConversation({ history, chatId }: { history: Message[]; chatId: string }) {
   'use server'
   const supabase = createClient()
-  const stream = createStreamableValue()
+  const stream = createStreamableValue('')
   const file = (await fs.readFile(process.cwd() + '/src/app/api/prompt.md')).toString()
+
+  console.log('history:', history)
 
   const { data: client } = await supabase.auth.getUser()
 
   if (!client || !client.user) {
     throw new Error('Client not authenticated')
   }
+
   const { data: existingMessage, error: checkError } = await supabase
     .from('messages')
     .select()
@@ -56,10 +59,12 @@ export async function continueConversation({ history, chatId }: { history: Messa
     })
 
     let fullContent = ''
+
     for await (const text of textStream) {
       fullContent += text
       stream.update(text)
     }
+
     const databaseData = {
       chat_id: chatId,
       content: fullContent,
@@ -67,9 +72,7 @@ export async function continueConversation({ history, chatId }: { history: Messa
       sent_by: client.user!.id,
     }
 
-    console.log('Saving message to Supabase:', databaseData)
-
-    const { error } = await supabase.from('messages').insert(databaseData)
+    const { error } = await supabase.from('messages').upsert(databaseData)
 
     if (error) {
       console.error('Error saving message to Supabase:', error)

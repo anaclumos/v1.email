@@ -1,5 +1,5 @@
 import { createClient } from '@/utils/supabase/server'
-import { V1EmailClient } from './v1-email-client'
+import V1EmailClient from './v1-email-client'
 import { Message } from '@/app/api/ai'
 
 export async function getChat(chatPublicId: string) {
@@ -48,7 +48,6 @@ export default async function Page({ params }: { params: { publicId: string } })
   const { data, error } = await getChat(params.publicId)
 
   if (error) {
-    console.error('Error fetching chat:', error)
     return <div>Error fetching chat</div>
   }
 
